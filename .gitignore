@@ -1,0 +1,24 @@
+# Données lourdes
+*.npy
+*.laz
+*.las
+*.pt
+*.pth
+*.npz
+
+# Dossiers inutiles
+__pycache__/
+*.pyc
+*.pyo
+.env/
+*.log
+
+# IDE
+.vscode/
+.idea/
+# Données trop lourdes à ne pas suivre
+data1/data.npy
+data1/train.npy
+data1/test.npy
+data1/val.npy
+data/*.laz

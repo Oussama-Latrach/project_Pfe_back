@@ -1,0 +1,8 @@
+epochs: 100
+batch_size: 32
+learning_rate: 0.001
+num_workers: 4
+model_path: experiments/best_model.pth
+train_data: data1/extracted_data/train_extracted.np
+val_data: data1/extracted_data/val_extracted.npy
+test_data: data1/extracted_data/test_extracted.np

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Classification Results</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            font-family: Arial, sans-serif;
+            color: #333;
+            background: url('{% static "home_slider1.jpg" %}') no-repeat center/cover;
+            text-align: center;
+        }
+
+        .app-name {
+            position: absolute;
+            top: 20px;
+            left: 50px;
+            color: #060606;
+            font-size: 3em;
+            font-weight: bold;
+        }
+
+        .nav {
+            position: absolute;
+            top: 20px;
+            right: 50px;
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav a {
+            color: #0c0c0c;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+            font-size: 1.5em;
+        }
+
+        .nav a:hover {
+            color: #f77;
+        }
+
+        .results-container {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            padding: 30px;
+            margin: 100px auto;
+            max-width: 1200px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .results-header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            color: #5372F0;
+        }
+
+        .results-header p {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+        }
+
+        .results-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .result-section {
+            flex: 1;
+            min-width: 300px;
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .result-section h2 {
+            color: #5372F0;
+            margin-top: 0;
+        }
+
+        .result-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+
+        .stats-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+
+        .stats-table th, .stats-table td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        .stats-table th {
+            background-color: #f2f2f2;
+        }
+
+        .download-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .download-btn {
+            padding: 10px 20px;
+            background-color: #5372F0;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .download-btn:hover {
+            background-color: #2c52ed;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #6c757d;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .back-btn:hover {
+            background-color: #5a6268;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-name">PFA project</div>
+    <nav class="nav">
+        <a href="{% url 'home' %}" class="button">Home</a>
+        <a href="{% url 'about' %}" class="button">About</a>
+        <a href="#" class="button" id="contactBtn">Contact Us</a>
+        <div class="dropdown">
+            <button class="profile-button">P</button>
+            <div class="dropdown-content">
+                <a href="{% url 'delete_account' %}">Delete Account</a>
+                <a href="#" id="logoutBtn">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="results-container">
+        <div class="results-header">
+            <h1>Classification Results</h1>
+            <p>File: {{ original_filename }}</p>
+        </div>
+
+        <div class="results-content">
+            <div class="result-section">
+                <h2>2D Visualization</h2>
+                <img src="{{ img_url }}" alt="2D Classification Results" class="result-image">
+                <p>XY projection of the classified point cloud</p>
+            </div>
+
+            <div class="result-section">
+                <h2>Classification Statistics</h2>
+                <table class="stats-table">
+                    <thead>
+                        <tr>
+                            <th>Class ID</th>
+                            <th>Class Name</th>
+                            <th>Points Count</th>
+                            <th>Percentage</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for stat in stats %}
+                        <tr>
+                            <td>{{ stat.class_id }}</td>
+                            <td>{{ stat.class_name }}</td>
+                            <td>{{ stat.count }}</td>
+                            <td>{{ stat.percentage }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="download-buttons">
+            <a href="{{ ply_url }}" download class="download-btn">Download PLY File</a>
+            <a href="{% url 'download_file' 'npy' %}" class="download-btn">Download NPY File</a>
+            <a href="{{ img_url }}" download class="download-btn">Download 2D Image</a>
+        </div>
+
+        <a href="{% url 'upload_page' %}" class="back-btn">Upload Another File</a>
+    </div>
+
+    <script>
+        document.getElementById('logoutBtn').addEventListener('click', function() {
+            window.location.href = "{% url 'login' %}";
+        });
+    </script>
+</body>
+</html> 

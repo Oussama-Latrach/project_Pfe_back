@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            height: 100vh;
+        }
+        .left-section {
+            width: 50%;
+            background-color: #5372F0;
+            color: #fff;
+            padding: 50px;
+        }
+        .right-section {
+            width: 50%;
+            background: url('{% static "blog-2.jpg" %}') no-repeat center/cover;
+        }
+        .content {
+            max-width: 800px;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="left-section">
+        <div class="content">
+            <h1>About Me</h1>
+            <p>En tant qu'ingénieur en géomatique passionné, j'ai développé cette application pour vous offrir une plateforme innovante de détection d'arbres et de bâtiments. Grâce à mes compétences en systèmes d'information géographique (SIG), télédétection et analyse spatiale, cette application met en œuvre des techniques avancées de traitement d'images pour identifier avec précision les éléments d'intérêt dans vos données géospatiales.</p>
+            <p>Explorez les fonctionnalités de cette application pour découvrir comment les technologies géospatiales peuvent résoudre efficacement des problèmes concrets dans des domaines tels que l'aménagement du territoire, la gestion des ressources naturelles ou l'urbanisme. N'hésitez pas à me contacter si vous avez des questions ou si vous souhaitez explorer des opportunités de collaboration passionnantes.</p>
+            <p>Je suis impatient de vous faire découvrir les possibilités offertes par cette application et de discuter de la manière dont nous pourrions travailler ensemble pour relever vos défis géomatiques.</p>
+        </div>
+    </div>
+    <div class="right-section"></div>
+</body>
+</html>

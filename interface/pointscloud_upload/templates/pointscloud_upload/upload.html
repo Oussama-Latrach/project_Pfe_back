@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Point Cloud</title>
+    <style>
+        /* ... (conservez votre CSS existant) ... */
+
+        .progress-container {
+            display: none;
+            width: 100%;
+            max-width: 500px;
+            margin: 20px auto;
+            background-color: #f1f1f1;
+            border-radius: 5px;
+        }
+
+        .progress-bar {
+            width: 0%;
+            height: 30px;
+            background-color: #5372F0;
+            border-radius: 5px;
+            text-align: center;
+            line-height: 30px;
+            color: white;
+            transition: width 0.3s;
+        }
+
+        .results-button {
+            display: none;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-name">PFA project</div>
+    <nav class="nav">
+        <a href="{% url 'home' %}" class="button">Home</a>
+        <a href="{% url 'about' %}" class="button">About</a>
+        <a href="#" class="button" id="contactBtn">Contact Us</a>
+        <div class="dropdown">
+            <button class="profile-button">P</button>
+            <div class="dropdown-content">
+                <a href="{% url 'delete_account' %}">Delete Account</a>
+                <a href="#" id="logoutBtn">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="header-content">
+        <h1>Upload Point Cloud</h1>
+        <h2>Upload your .npy file and launch classification</h2>
+
+        <form method="post" enctype="multipart/form-data" id="uploadForm">
+            {% csrf_token %}
+            <div class="file-input-wrapper">
+                <input type="file" id="file-input" name="pointcloud" accept=".npy" required />
+            </div>
+
+            <div class="progress-container" id="progressContainer">
+                <div class="progress-bar" id="progressBar">0%</div>
+            </div>
+
+            {% if file_uploaded %}
+            <div class="file-info" id="file-info" style="display: block;">
+                <p><strong>File Name:</strong> <span id="file-name">{{ filename }}</span></p>
+                <button type="button" onclick="launchClassification()"
+                        class="button" style="margin-top: 20px;">
+                    Launch Classification
+                </button>
+            </div>
+            {% else %}
+            <div class="file-info" id="file-info">
+                <p><strong>File Name:</strong> <span id="file-name"></span></p>
+                <p><strong>File Size:</strong> <span id="file-size"></span></p>
+                <p><strong>File Type:</strong> <span id="file-type"></span></p>
+            </div>
+            {% endif %}
+        </form>
+    </div>
+
+    <div id="contactModal" class="modal">
+        <div class="modal-content">
+            <span class="close">×</span>
+            <h2>Contact Information</h2>
+            <p>Email: latrechoussama@gmail.com</p>
+            <p>Tel: 29306025</p>
+        </div>
+    </div>
+
+    <script>
+        function launchClassification() {
+            const progressContainer = document.getElementById('progressContainer');
+            const progressBar = document.getElementById('progressBar');
+
+            progressContainer.style.display = 'block';
+
+            // Simulation de progression (remplacer par des vraies updates via AJAX)
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += 5;
+                progressBar.style.width = `${progress}%`;
+                progressBar.textContent = `${progress}%`;
+
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    window.location.href = "{% url 'launch_classification' %}";
+                }
+            }, 300);
+        }
+
+        document.getElementById('file-input').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                document.getElementById('file-info').style.display = 'block';
+                document.getElementById('file-name').textContent = file.name;
+                document.getElementById('file-size').textContent = (file.size / (1024*1024)).toFixed(2) + ' MB';
+                document.getElementById('file-type').textContent = file.type || 'NPY point cloud';
+
+                // Soumettre automatiquement le formulaire
+                document.getElementById('uploadForm').submit();
+            }
+        });
+
+        // Gestion des événements existants
+        document.getElementById('contactBtn').addEventListener('click', function() {
+            document.getElementById('contactModal').style.display = 'block';
+        });
+
+        document.getElementsByClassName('close')[0].addEventListener('click', function() {
+            document.getElementById('contactModal').style.display = 'none';
+        });
+
+        window.addEventListener('click', function(event) {
+            if (event.target == document.getElementById('contactModal')) {
+                document.getElementById('contactModal').style.display = 'none';
+            }
+        });
+
+        document.getElementById('logoutBtn').addEventListener('click', function() {
+            window.location.href = "{% url 'login' %}";
+        });
+    </script>
+</body>
+</html>
