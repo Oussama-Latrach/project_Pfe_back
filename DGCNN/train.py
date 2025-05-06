@@ -16,9 +16,9 @@ def main():
 
     # Paramètres (peuvent être modifiés ici)
     num_classes = 4
-    epochs = 10
-    batch_size = 128
-    learning_rate = 0.01
+    epochs = 100
+    batch_size = 64
+    learning_rate = 0.001
     weight_decay = 1e-3
 
     os.makedirs('experiments', exist_ok=True)
@@ -33,7 +33,7 @@ def main():
     scheduler = optim.lr_scheduler.StepLR(optimizer, step_size=20, gamma=0.5)
 
     # Poids des classes et loss function
-    class_counts = np.array([40688, 240847, 138346, 133705])
+    class_counts = np.array([42038, 197035, 138761, 144057])
     class_weights = torch.tensor(1. / (class_counts / class_counts.sum()), dtype=torch.float32).to(device)
     criterion = nn.CrossEntropyLoss(weight=class_weights)
 

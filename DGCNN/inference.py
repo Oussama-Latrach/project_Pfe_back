@@ -88,10 +88,10 @@ class DGCNNInference:
         self.model.eval()
 
         self.colors = np.array([
-            [1, 0, 0],  # Classe 1 - Unclassified (gris)
-            [0, 1, 0],  # Classe 2 - Ground (vert)
-            [0, 0, 1],  # Classe 3 - Vegetation (vert foncé)
-            [1, 1, 0],  # Classe 4 - Building (orange)
+            [0, 0, 0],  # Classe 1 - Unclassified (noir)
+            [0.65, 0.16, 0.16],  # Classe 2 - Ground (marron)
+            [0, 1, 0],  # Classe 3 - Vegetation (vert )
+            [1, 1, 0],  # Classe 4 - Building (jaune)
         ])
 
         self.class_names = ['Unclassified', 'Ground', 'Vegetation', 'Building']
@@ -102,7 +102,7 @@ class DGCNNInference:
         points = torch.tensor(data, dtype=torch.float32).to(self.device)
 
         predictions = []
-        batch_size = 128
+        batch_size = 64
         with torch.no_grad():
             for i in range(0, len(points), batch_size):
                 batch = points[i:i + batch_size]
@@ -154,8 +154,8 @@ if __name__ == '__main__':
 
     parser = argparse.ArgumentParser(description='Inférence DGCNN pour classification de nuages de points')
     parser.add_argument('input_file', type=str, help='Chemin vers le fichier .npy d\'entrée (5 colonnes)')
-    parser.add_argument('--models', type=str, default='models/best_model.pth',
-                        help='Chemin vers le modèle entraîné (default: models/best_model.pth)')
+    parser.add_argument('--model', type=str, default='experiments/best_model.pth',
+                        help='Chemin vers le modèle entraîné (default: experiments/best_model.pth)')
 
     args = parser.parse_args()
 

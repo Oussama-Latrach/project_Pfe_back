@@ -30,7 +30,7 @@ def main():
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     os.makedirs('experiments', exist_ok=True)
 
-    _, _, test_loader = get_loaders(batch_size=128)
+    _, _, test_loader = get_loaders(batch_size=64)
     model = DGCNN(num_classes=4).to(device)
 
     model_path = 'experiments/best_model.pth'

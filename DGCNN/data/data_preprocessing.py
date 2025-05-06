@@ -13,8 +13,8 @@ def remap_classification(value, classes_cibles):
     return value if value in classes_cibles else 1
 
 # Configuration
-input_file = "inference_zone.laz"
-output_file = "inference_zone.npy"
+input_file = "inference_data.laz"
+output_file = "inference_data.npy"
 target_classes = [1, 2, 3, 4, 5, 6]  # Classes to keep
 
 print(" Starting data1 preprocessing...")

@@ -1,7 +1,7 @@
 import numpy as np
 
 # Charger le fichier .npy
-data = np.load('inference_zone.npy')  # Remplace par le chemin de ton fichier
+data = np.load('inference_data.npy')  # Remplace par le chemin de ton fichier
 
 # Vérification du nombre de colonnes
 if data.shape[1] < 6:
@@ -11,6 +11,6 @@ if data.shape[1] < 6:
 data_reduit = data[:, :5]
 
 # Sauvegarder dans un nouveau fichier
-np.save('inference_zone.npy', data_reduit)
+np.save('inference_data.npy', data_reduit)
 
 print("Fichier sauvegardé avec les 5 premières colonnes.")

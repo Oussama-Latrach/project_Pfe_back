@@ -6,7 +6,7 @@ Divides dataset into train/val/test sets with 70%/15%/15% split.
 import numpy as np
 
 # Configuration
-input_file = "data.npy"
+input_file = "petite_zone_etude.npy"
 output_files = {
     'train': "train.npy",
     'val': "val.npy",

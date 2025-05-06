@@ -2,7 +2,7 @@ import numpy as np
 from collections import Counter
 
 # Chargement du fichier .npy
-data = np.load("inference_zone.npy")  # Remplace par le chemin vers ton fichier .npy
+data = np.load("inference_data.npy")  # Remplace par le chemin vers ton fichier .npy
 
 
 # 1. Nombre total de points
